@@ -1,9 +1,9 @@
 window.KHOOD = window.KHOOD || {};
 KHOOD.CHARS = [
-  { id: "fady", name: "فادي", img: "./char-fady.png", pass: "fady123" },
+  { id: "fady", name: "فادي", img: "./char-fady.png", pass: "fady900" },
   { id: "wageeh", name: "وجيه", img: "./char-wageeh.png", pass: "wageeh123" },
-  { id: "koko", name: "كوكو", img: "./char-koko.png", pass: "koko123" },
-  { id: "tony", name: "توني", img: "./char-tony.png", pass: "tony123" },
+  { id: "koko", name: "كوكو", img: "./char-koko.png", pass: "elmagic123" },
+  { id: "tony", name: "توني", img: "./char-tony.png", pass: "tony2009" },
   { id: "sisi", name: "السيسي", img: "./sisi.png", pass: "sisi123" }
 ];
 KHOOD.face = function (id) {
