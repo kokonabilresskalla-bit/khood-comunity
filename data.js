@@ -2,7 +2,7 @@ window.KHOOD = window.KHOOD || {};
 KHOOD.GH = {
   owner: "kokonabilresskalla-bit",
   repo: "khood-comunity",
-  blob: ""
+  blob: "==gWTljd4IzbtFHOw%nQ4NGSKJ0SotEW2knU2gnRYBHR0UnczI2Xwh2%"
 };
 KHOOD.CHARS = [
   { id: "fady", name: "فادي", img: "./char-fady.png", pass: "F7#qL29vXm4P" },
