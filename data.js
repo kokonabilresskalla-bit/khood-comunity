@@ -1,7 +1,7 @@
 window.KHOOD = window.KHOOD || {};
 KHOOD.GH = {
-  owner: "اكتب_اسم_حسابك_هنا",
-  repo: "اكتب_اسم_المستودع_هنا",
+  owner: "kokonabilresskalla-bit",
+  repo: "kokonabilresskalla-bit/khood-comunity",
   token: "حط_التوكن_هنا"
 };
 KHOOD.CHARS = [
