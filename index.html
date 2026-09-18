@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#123044">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="khood community">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>khood community</title>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div class="flash" id="flash"></div>
+  <div id="hud">
+    <div>
+      مستوى <span id="lvl">1</span>/50<br>
+      <span id="near"></span>
+      <div id="powers"></div>
+    </div>
+    <div>
+      <div id="missionHud">المطلوب</div>
+      قروش: <span id="coinHud">0</span> | نقاط: <span id="scoreHud">0</span>
+      <div id="hpWrap"><div id="hpBar"></div></div>
+    </div>
+  </div>
+  <button id="mutePlay" type="button">صوت</button>
+  <button id="pauseBtn" type="button">قائمة</button>
+  <button id="micPlay" type="button">مايك</button>
+  <button id="dashBtn" type="button">سرعة</button>
+  <button id="emoBtn" type="button">خووود</button>
+  <div id="stickWrap"><div id="stickBase"><div id="stickKnob"></div></div></div>
+
+  <div class="screen on" id="menu">
+    <div class="panel">
+      <h1>khood community</h1>
+      <p id="menuJoke">اهرب، اجمع، ومتتخليش يمسكك.</p>
+      <div class="stats">
+        <span>قروش: <b id="menuCoins">0</b></span>
+        <span>أحسن سكور: <b id="menuBest">0</b></span>
+      </div>
+      <p id="rankLine" style="color:#9ff3c0;margin-top:-6px">الرتبة: لسه بتسخن</p>
+      <div class="row">
+        <button class="btn" id="playBtn" type="button">العب</button>
+        <button class="btn blue" id="mapBtn" type="button">المراحل</button>
+        <button class="btn red" id="onlineBtn" type="button">أونلاين</button>
+        <button class="btn" id="dailyBtn" type="button">تحدي اليوم</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" id="charBtn" type="button">الشخصيات</button>
+        <button class="btn ghost" id="huntBtn" type="button">مين يطاردك</button>
+        <button class="btn ghost" id="shopBtn" type="button">الدكان</button>
+        <button class="btn ghost" id="helpBtn" type="button">التعليمات</button>
+        <button class="btn ghost" id="setBtn" type="button">الظبط</button>
+        <button class="btn ghost" id="achBtn" type="button">الإنجازات</button>
+        <button class="btn ghost" id="chatBtn" type="button">الدردشة</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn green" id="installBtn" type="button">ثبّتها على الموبايل</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="online">
+    <div class="panel">
+      <h2>أونلاين</h2>
+      <p>غرفة لحد 5: واحد بيطارد و4 بيجروا. نفس اللينك ونفس الكود.</p>
+      <input id="roomIn" maxlength="5" placeholder="كود الغرفة" style="width:70%;padding:10px;border-radius:12px;border:0;font-size:20px;text-align:center;margin:8px 0">
+      <div class="row">
+        <button class="btn" id="mkRoom" type="button">اعمل غرفة</button>
+        <button class="btn green" id="jnRoom" type="button">ادخل الغرفة</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" id="wantHunt" type="button">عايز أطارد</button>
+        <button class="btn green" id="micBtn" type="button">المايك مقفول</button>
+      </div>
+      <p id="onStatus">مش متصل</p>
+      <div id="onList"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="onStart" type="button" style="display:none">يلا نجري</button>
+        <button class="btn" id="onRetry" type="button">حاول تاني</button>
+        <button class="btn ghost" id="onBack" type="button">رجوع</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="map">
+    <div class="panel">
+      <h2>خريطة المراحل</h2>
+      <p id="mapHint">خلّص المرحلة عشان اللي بعدها تتفتح.</p>
+      <div class="grid" id="mapGrid"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="mapBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="chars">
+    <div class="panel">
+      <h2>الشخصيات</h2>
+      <div id="charList"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="charBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="shop">
+    <div class="panel">
+      <h2>الدكان</h2>
+      <p>المساعدات غالية والمقلب ببلاش. الشخصية العادية بس اللي مفتوحة من الأول.</p>
+      <div id="shopList"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="shopBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="brief">
+    <div class="panel">
+      <h2 id="briefTitle">المطلوب منك</h2>
+      <p id="briefText"></p>
+      <p id="briefWarn" style="color:#ffb3b3"></p>
+      <div id="briefHelp"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="briefGo" type="button">يلا وأنا مستحمل</button>
+        <button class="btn ghost" id="briefBack" type="button">رجوع</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="hunter">
+    <div class="panel">
+      <h2>مين يطاردك</h2>
+      <p>السيسي موجود من الأول. لو فتحت حد تاني هيطاردك بمميزاته وهو بيجري وراك.</p>
+      <div id="huntList"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="huntBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="howto">
+    <div class="panel">
+      <h2>التعليمات والخدع</h2>
+      <p id="howtoText" style="text-align:right;font-size:15px"></p>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="helpBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="chat">
+    <div class="wa">
+      <div id="waList">
+        <div class="wa-head">
+          <button class="wa-ico" id="chatBack" type="button">رجوع</button>
+          <div>
+            <b>المسنجر</b>
+            <small id="chatStat">مش ظاهر</small>
+          </div>
+        </div>
+        <div id="waLock" class="wa-lock">
+          <p>اختار شخصيتك مرة واحدة. حط كلمة سر ومش هتقدر تغيّرها بعد كده.</p>
+          <div id="chatWho" class="row"></div>
+          <input id="chatPass" type="password" placeholder="كلمة سر الشخصية">
+          <button class="btn" id="chatOn" type="button">افتح الشخصية</button>
+        </div>
+        <input id="chatUser" type="hidden" value="">
+        <div class="wa-tools">
+          <select id="chatAdd"></select>
+          <button class="btn green" id="chatAddBtn" type="button">ضيف</button>
+          <button class="btn" id="chatGrpBtn" type="button">جروب</button>
+        </div>
+        <div id="chatPeople" class="wa-chats"></div>
+      </div>
+      <div id="waThread">
+        <div class="wa-head">
+          <button class="wa-ico" id="chatThreadBack" type="button">›</button>
+          <img id="chatFace" src="./sisi.png" alt="">
+          <div class="grow">
+            <b id="chatWith">—</b>
+            <small id="chatSeen">آخر ظهور</small>
+          </div>
+          <button class="wa-ico" id="chatCall" type="button">صوت</button>
+          <button class="wa-ico" id="chatVid" type="button">فيديو</button>
+          <button class="wa-ico" id="chatInvite" type="button">لعب</button>
+        </div>
+        <div id="chatLog" class="wa-log"></div>
+        <div class="wa-bar">
+          <input id="chatIn" placeholder="رسالة">
+          <button class="btn green" id="chatSend" type="button">ابعت</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="callScreen">
+    <video id="vidYou" autoplay playsinline></video>
+    <video id="vidMe" autoplay muted playsinline></video>
+    <p id="callName">مكالمة</p>
+    <div class="call-acts">
+      <button id="callMute" type="button">كتم</button>
+      <button id="hangBtn" type="button">قفل</button>
+    </div>
+  </div>
+
+  <div class="screen" id="achs">
+    <div class="panel">
+      <h2>الإنجازات</h2>
+      <div id="achList" style="text-align:right"></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="achBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="settings">
+    <div class="panel">
+      <h2>الظبط</h2>
+      <div class="row">
+        <button class="btn" id="togMusic" type="button">الموسيقى</button>
+        <button class="btn" id="togSfx" type="button">المؤثرات</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="togVibe" type="button">الاهتزاز</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn red" id="resetBtn" type="button">مسح التقدم</button>
+      </div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" id="setBack" type="button">رجوع</button></div>
+    </div>
+  </div>
+
+  <div class="screen" id="result">
+    <div class="panel">
+      <h2 id="resTitle">النتيجة</h2>
+      <p id="joke"></p>
+      <p id="resText"></p>
+      <div id="resStars" style="font-size:28px;color:#ffd24a;margin:6px 0"></div>
+      <div class="row">
+        <button class="btn" id="resRetry" type="button">إعادة</button>
+        <button class="btn green" id="resNext" type="button">التالي</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn ghost" id="resMap" type="button">الخريطة</button>
+        <button class="btn ghost" id="resMenu" type="button">القائمة</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="caught">
+    <div id="khood">خـــوود</div>
+    <video id="loseVid" src="./catch.mp4" playsinline webkit-playsinline></video>
+  </div>
+
+  <script>
+  (function () {
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js", { scope: "./" });
+    let deferredPrompt = null;
+    const installBtn = document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault(); deferredPrompt = e;
+    });
+    installBtn.addEventListener("click", async function () {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        return;
+      }
+      const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      alert(ios ? "من Safari: المشاركة ثم Add to Home Screen" : "من كروم: القائمة ثم إضافة إلى الشاشة الرئيسية");
+    });
+  })();
+  </script>
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <script src="./data.js"></script>
+  <script src="./store.js"></script>
+  <script src="./game.js"></script>
+</body>
+</html>
